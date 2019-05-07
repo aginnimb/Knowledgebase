@@ -1,4 +1,4 @@
-mport xml.etree.ElementTree as ET
+import xml.etree.ElementTree as ET
 tree = ET.parse('saliva_metabolites.xml')
 root = tree.getroot()
 #print(root)
