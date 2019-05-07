@@ -1,0 +1,23 @@
+#Phenol Explorer Data.. Compounds & classification
+
+CREATE TABLE classification
+(class VARCHAR,subclass VARCHAR,compound_name VARCHAR,compound_id INTEGER PRIMARY KEY);
+
+CREATE TABLE compounds
+(id INT PRIMARY KEY,
+  class VARCHAR,subclass VARCHAR,
+  compound_name VARCHAR,
+  mol_wt DECIMAL,synonyms VARCHAR,
+  formula VARCHAR,
+  cas_number VARCHAR,
+  chebi_id INTEGER,
+  pubchem_id INTEGER,
+  aglycones VARCHAR,
+  created_on TIMESTAMP,
+  updated_on TIMESTAMP);
+
+  ALTER TABLE compounds RENAME compound_id TO phenol_id;
+  ALTER TABLE phenol_rels RENAME compound_id TO phenol_id;
+  ALTER TABLE classification RENAME compound_id TO phenol_id;
+
+  
