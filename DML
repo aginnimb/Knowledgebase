@@ -1,0 +1,5 @@
+creating new table phenols using -SELECT INTO-
+SELECT compound_id,chebi_id,pubchem_id INTO phenol_rels FROM compounds WHERE chebi_id != 0 AND pubchem_id != 0;
+SELECT phenol_id,chebi_id INTO phenol_to_chebi FROM compounds WHERE chebi_id != 0;
+
+classification.*,mol_wt,formula INTO comp_classfication FROM classification,compounds;
