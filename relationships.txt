@@ -33,7 +33,7 @@ CREATE (x)-[r:SAME_AS]->(y) RETURN x,y
 
 MATCH (x:phenol_classification) MATCH (y:phenolcompounds)
 WHERE x.class = y.class
-CREATE (x)-[r:SAME_AS]->(y) RETURN x,y
+CREATE (x)-[r:SAME_CLASS]->(y) RETURN x,y
 
 #4 no changes
 MATCH (a:Phenol_to_CHEBI) MATCH (b:CHEBI)
