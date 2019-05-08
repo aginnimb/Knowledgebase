@@ -26,17 +26,13 @@ MATCH (a:Phenol_to_Pubchem) MATCH (b:phenolcompounds)
 WHERE a.phenol_id = b.phenol_id
 CREATE (a)-[r:SAME_AS]->(b) RETURN a,b
 
-#3. no changes ??
-MATCH (x:phenols_classification) MATCH (y:phenolcompounds)
-WHERE x.phenol_id = y.phenol_id
-CREATE (x)-[r:SAME_AS]->(y) RETURN x,y
-
-MATCH (x:phenol_classification) MATCH (y:phenolcompounds)
-WHERE x.class = y.class
-CREATE (x)-[r:SAME_CLASS]->(y) RETURN x,y
+#3
+MATCH (a:Compound) MATCH(b:PhenolCompounds) WHERE a.cid = b.cid 
+CREATE (a)-[r:SAME_AS]->(b)
+RETURN a,b
 
 #4 no changes
-MATCH (a:Phenol_to_CHEBI) MATCH (b:CHEBI)
+MATCH (a:PhenolCompounds) MATCH (b:CHEBI)
 WHERE a.chebi_id = b.chebi_id
 CREATE (a)-[r:SAME_AS]->(b) RETURN a,b
 
