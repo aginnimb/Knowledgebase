@@ -11,5 +11,5 @@ cp /Users/aginni/Documents/phenolsdata/phenols_classification.csv /Users/aginni/
 
 MATCH (phenol_to_chebi) DELETE phenol_to_chebi;
 
-LOAD CSV WITH HEADERS FROM 'file:///phenolsdata/phenolcompounds.csv' AS Line CREATE(:phenolcompounds{phenol_id: Line.phenol_to_chebi, class: Line.class, subclass: Line.subclass, compound_name: Line.compound_name,mol_wt: Line.mol_wt, synonyms: Line.synonyms, formula: Line.formula, cas_number: Line.cas_number,
-chebi_id: Line.chebi_id, pubchem_id: Line.pubchem_id, aglycones: Line.aglycones, created_on: Line.created_on, updated_on: Line.updated_on})
+LOAD CSV WITH HEADERS FROM 'file:///phenolsdata/phenolcompounds.csv' AS Line CREATE(:PhenolCompounds{phenol_id: Line.phenol_id, class: Line.class, subclass: Line.subclass, compound_name: Line.compound_name,mol_wt: Line.mol_wt, synonyms: Line.synonyms, formula: Line.formula, cas_number: Line.cas_number,
+chebi_id: Line.chebi_id, cid: Line.pubchem_id, aglycones: Line.aglycones, created_on: Line.created_on, updated_on: Line.updated_on})
