@@ -1,6 +1,8 @@
+/* EXAMPLES TO TEST THE MAPPING
 MATCH (r:phenol_to_chebi{phenol_id : '421'})
 MATCH (x:CHEBI{chebi_id:'CHEBI:62023'})
-RETURN r, x 
+RETURN r, x
+
 MATCH (r:phenol_to_chebi{phenol_id : '421'})
 MATCH (x:CHEBI{chebi_id:'CHEBI:62023'})
 CREATE (r)-[:SAME_AS]->(x);
@@ -12,6 +14,7 @@ MATCH (a:phenol_to_chebi{chebi_id:'27475'})
 MATCH (b:phenolcompounds{phenol_id:'8'})
 CREATE (a)- [:REFERENCED_IN]->(b)
 RETURN a,b
+*/
 
 #1. relationship between Phenol_to_CHEBI & phenolcompounds
 MATCH (a:Phenol_to_CHEBI) MATCH (b:phenolcompounds)
@@ -24,7 +27,7 @@ WHERE a.phenol_id = b.phenol_id
 CREATE (a)-[r:SAME_AS]->(b) RETURN a,b
 
 #3. no changes ??
-MATCH (x:phenol_classification) MATCH (y:phenolcompounds)
+MATCH (x:phenols_classification) MATCH (y:phenolcompounds)
 WHERE x.phenol_id = y.phenol_id
 CREATE (x)-[r:SAME_AS]->(y) RETURN x,y
 
@@ -37,10 +40,17 @@ MATCH (a:Phenol_to_CHEBI) MATCH (b:CHEBI)
 WHERE a.chebi_id = b.chebi_id
 CREATE (a)-[r:SAME_AS]->(b) RETURN a,b
 
-#5
-MATCH (a:KEGG) MATCH(b:BioSystem)
-WHERE a.bsid = b.bsid
-CREATE (a)-[r:SAME_AS]->(b) RETURN a,b
+# Rename label and remove old one
+MATCH (s:phenols_classfication)
+SET s:Phenols_Classification
+REMOVE s:phenols_classfication
+
+# Matching label and removing
+---MATCH (s:phenol_to_pubmed)
+REMOVE s:phenol_to_pubmed
+
+---MATCH (s:phenol_to_chebi)
+REMOVE s:phenol_to_chebi
 
 
 
