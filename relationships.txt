@@ -16,22 +16,13 @@ CREATE (a)- [:REFERENCED_IN]->(b)
 RETURN a,b
 */
 
-#1. relationship between Phenol_to_CHEBI & phenolcompounds
-MATCH (a:Phenol_to_CHEBI) MATCH (b:phenolcompounds)
-WHERE a.chebi_id = b.chebi_id
-CREATE (a)-[r:SAME_AS]->(b) RETURN a,b
 
-#2. relationship between Phenol_to_Pubchem & phenolcompounds
-MATCH (a:Phenol_to_Pubchem) MATCH (b:phenolcompounds)
-WHERE a.phenol_id = b.phenol_id
-CREATE (a)-[r:SAME_AS]->(b) RETURN a,b
-
-#3
+#1
 MATCH (a:Compound) MATCH(b:PhenolCompounds) WHERE a.cid = b.cid 
 CREATE (a)-[r:SAME_AS]->(b)
 RETURN a,b
 
-#4 no changes
+#2 
 MATCH (a:PhenolCompounds) MATCH (b:CHEBI)
 WHERE a.chebi_id = b.chebi_id
 CREATE (a)-[r:SAME_AS]->(b) RETURN a,b
