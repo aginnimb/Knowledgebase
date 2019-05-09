@@ -26,8 +26,8 @@ Started neo4j (pid 72115). It is available at http://localhost:7474/. #Copy this
 There may be a short delay until the server is ready.
 See /Users/aginni/opt/brew/var/log/neo4j/neo4j.log for current status.
 
-# Load CSV WITH HEADERS 
-#neo4j which will create the nodes with their properties while loading
+## Load CSV WITH HEADERS 
+*neo4j which will create the nodes with their properties while loading
 * Neo4j cannot find the file unless it is in the neo4j imports directory.Make sure the data is in neo4j imports directory
 
 *phenolsdata directory is copied to the neo4j imports
@@ -72,7 +72,7 @@ In the below code, we are matching two node labels ased on their properties and 
 -- WHERE a.chebi_id = b.chebi_id
 -- CREATE (a)-[r:SAME_AS]->(b) RETURN a,b
 
-# Rename label and remove old one
+## Rename label and remove old one
 
 #Match the node label and rename using SET function. And it is important to remove the old one as it creates redundancy with in the database
 
@@ -82,7 +82,7 @@ REMOVE s:phenols_classfication */
 /* MATCH (phenol_to_chebi) DELETE phenol_to_chebi */ (not sure)
 
 
-# Matching label and removing
+## Matching label and removing
 
 /* MATCH (s:phenol_to_pubmed) #to remove any unnecessary nodes
 REMOVE s:phenol_to_pubmed */
@@ -90,13 +90,13 @@ REMOVE s:phenol_to_pubmed */
 /* MATCH (s:phenol_to_chebi)
 REMOVE s:phenol_to_chebi */
 
-# DELETE relationships between nodes
+##DELETE relationships between nodes
 
-#To delete the relationship between two nodes, make sure to specify the relation type else it may remove existing relationships
+*To delete the relationship between two nodes, make sure to specify the relation type else it may remove existing relationships
 /* MATCH(:phenol_to_chebi)-[r:REFERENCED_IN](:phenolcompounds) DELETE r */
 
 /* MATCH(:KEGG)-[r:SAME_AS]-(:BioSystem) DELETE r */
 
-#Same as above,but here we are deleting the relation just between the two properties of the nodes
+*Same as above,but here we are deleting the relation just between the two properties of the nodes
 /* MATCH (r:phenol_to_chebi{phenol_id : '421'})-[deleteme:SAME_AS]->(x:CHEBI{chebi_id:'CHEBI:62023'})
 DELETE deleteme; */
