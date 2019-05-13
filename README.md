@@ -17,6 +17,7 @@ For better understanding : https://docs.brew.sh/Installation
 Then on command line run: Brew cask Install neo4j
 
 *You will see something like this: 
+ 
  home:         /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec
   config:       /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec/conf
   logs:         /Users/aginni/opt/brew/var/log/neo4j
@@ -25,6 +26,7 @@ Then on command line run: Brew cask Install neo4j
   data:         /Users/aginni/opt/brew/var/neo4j/data
   certificates: /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec/certificates
   run:          /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec/run
+
 Starting Neo4j.
 Started neo4j (pid 72115). It is available at http://localhost:7474/. #Copy this to your browser to launch neo4j
 There may be a short delay until the server is ready.
