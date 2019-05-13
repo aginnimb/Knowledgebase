@@ -19,19 +19,19 @@ with open("saliva_metabolites.csv",'w') as salivacsv:
 		iupac_name= metabolite.find('nsstring:iupac_name',ns)
 		traditional_iupac= metabolite.find('nsstring:traditional_iupac',ns)
 		cas_number= metabolite.find('nsstring:cas_registry_number',ns)
-		drugbank_id= metabolite.find('nsstring:drugbank_id',ns)
+		drugbank_id= metabolite.find('nsstring:drugbank_id',ns) #has none type
 		chebi_id= metabolite.find('nsstring:chebi_id',ns)
 		cid= metabolite.find('nsstring:pubchem_compound_id',ns)
-		phenol_id= metabolite.find('nsstring:phenol_explorer_compound_id',ns)
+		phenol_id= metabolite.find('nsstring:phenol_explorer_compound_id',ns) #has none type
 		foodb_id= metabolite.find('nsstring:foodb_id',ns)
-		knapsack_id= metabolite.find('nsstring:knapsack_id',ns)
+		knapsack_id= metabolite.find('nsstring:knapsack_id',ns) #has none type
 		chemspider_id=metabolite.find('nsstring:chemspider_id',ns)
 		kegg_id=metabolite.find('nsstring:kegg_id',ns)
 		meta_cyc_id= metabolite.find('nsstring:meta_cyc_id',ns)
-		bigg_id=metabolite.find('nsstring:bigg_id',ns)
-		metlin_id=metabolite.find('nsstring:metlin_id',ns)
-		pdb_id=metabolite.find('nsstring:pdb_id',ns)
-		wikipedia_id=metabolite.find('nsstring:wikipedia_id',ns)
+		bigg_id=metabolite.find('nsstring:bigg_id',ns) #has none type
+		metlin_id=metabolite.find('nsstring:metlin_id',ns) #has none type
+		pdb_id=metabolite.find('nsstring:pdb_id',ns) #has none type
+		wikipedia_id=metabolite.find('nsstring:wikipedia_id',ns) #has none type
 		secondary_accessions= metabolite.find('nsstring:secondary_accessions',ns)
 		sa =[] #Extract data at level#2 with multiple occurences
 		for sec_accession in secondary_accessions.findall('nsstring:accession',ns):
