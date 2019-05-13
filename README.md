@@ -32,7 +32,7 @@ Started neo4j (pid 72115). It is available at http://localhost:7474/. #Copy this
 There may be a short delay until the server is ready.
 See /Users/aginni/opt/brew/var/log/neo4j/neo4j.log for current status.
 
-## Load CSV WITH HEADERS 
+## Load CSV files WITH HEADERS 
 
 *neo4j which will create the nodes with their properties while loading
 * Neo4j cannot find the file unless it is in the neo4j imports directory.Make sure the data is in neo4j imports directory
