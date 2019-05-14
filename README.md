@@ -108,15 +108,5 @@ REMOVE s:phenol_to_chebi */
 /* MATCH (r:phenol_to_chebi{phenol_id : '421'})-[deleteme:SAME_AS]->(x:CHEBI{chebi_id:'CHEBI:62023'})
 DELETE deleteme; */
 
-## Parsing XML file using Python
 
-*To read xml files in python, it is required to import module called ElementTree which makes it easy to parse through the xml  heirarchy.
-In your python IDLE  import module for xml
-
--- import xml.etree.ElementTree as ET
--- tree = ET.parse('saliva.metabolites.xml')
-ns ={'nsstring':'http://www.hmdb.ca'} #to make it easy, creating a variable for the reference namespace string
-
-*using the tag names, accessed the tag values and stored in a empty list which are at single level andfor the second level and third level data, I iterated using the for loop(for single and multiple occurences)
-And final output was directed into a csv file using cvs module
 
