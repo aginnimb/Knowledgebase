@@ -125,7 +125,7 @@ with open("saliva_metabolites.csv",'w') as salivacsv:
 		for syns in synonyms.findall('nsstring:synonym',ns):
 			sy.append(syns.text)
 		salivadata.append([accession.text,v_name,sa,v_cs_description,sy,v_chemical_formula,v_average_mol_wt,v_monisotopic_mol_wt,v_iupac_name,v_traditional_iupac,v_cas_number,v_drugbank_id,v_chebi_id,v_cid,v_phenol_id,v_foodb_id,v_knapsack_id,v_chemspider_id,v_kegg_id,v_meta_cyc_id,
-		v_bigg_id,v_metlin_id,v_pdb_id,v_wikipedia_id])
+		v_bigg_id,v_metlin_id,v_pdb_id,v_wikipedia_id]) #appending all the variables to empty list
 	writer.writerow(salivaheader)
 	for row in salivadata:
 		writer.writerow(row)
