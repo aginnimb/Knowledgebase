@@ -64,7 +64,7 @@ In the below code, we are matching two node labels ased on their properties and 
 -- WHERE a.chebi_id = b.chebi_id
 -- CREATE (a)-[r:SAME_AS]->(b) RETURN a,b
 
-## Rename label and remove old one
+### Rename label and remove old one
 
 #Match the node label and rename using SET function. And it is important to remove the old one as it creates redundancy with in the database
 
