@@ -1,6 +1,6 @@
 #    XML parsing using Python & Neo4j implementation
 
-##Creating a consolidated graph database and mapping relations between the databases using Neo4j. This includes XML file conversion into CSV using Python ElementTree module
+##Creating a consolidated graph database and mapping relations between the databases using Neo4j. This includes XML file conversion into CSV using Python ElementTree module. Refer xml_parser.py in the repository for python code
 
 ### Installation
 https://neo4j.com/download-center/#releases (install the Community version)-- 
