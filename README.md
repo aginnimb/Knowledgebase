@@ -1,12 +1,12 @@
-# Knowledgebase-Project(Neo4j implementation) & XML parsing using Python
+#    XML parsing using Python & Neo4j implementation
 
-#Creating a consolidated graph database and mapping relations between the databases using Neo4j. This includes XML file conversions - Parsing and flattening the XML file into CSV
+#Creating a consolidated graph database and mapping relations between the databases using Neo4j. This includes XML file conversion into CSV using Python ElementTree module
 
-## Installation
+### Installation
 https://neo4j.com/download-center/#releases (install the Community version)-- 
 make sure to set up the home directory so we can run through the command line
 
-## Installation using Home Brew: (Popular package manager for macOS)
+### Installation using Home Brew: (Popular package manager for macOS)
 
 *Ensure Homebrew is installed before you think of using it
 
@@ -32,7 +32,7 @@ Started neo4j (pid 72115). It is available at http://localhost:7474/. #Copy this
 There may be a short delay until the server is ready.
 See /Users/aginni/opt/brew/var/log/neo4j/neo4j.log for current status.
 
-## Load CSV files WITH HEADERS 
+### Load CSV files WITH HEADERS 
 
 *neo4j which will create the nodes with their properties while loading
 * Neo4j cannot find the file unless it is in the neo4j imports directory.Make sure the data is in neo4j imports directory
@@ -59,7 +59,7 @@ chebi_id: Line.chebi_id, pubchem_id: Line.pubchem_id, aglycones: Line.aglycones,
 /* LOAD CSV WITH HEADERS FROM 'file:///phenolsdata/PhenolCompounds1.csv' AS Line CREATE(:PhenolCompounds{phenol_id: Line.id, compound_class: Line.compound_class, name:Line.name, mol_wt: Line.molecular_weight, synonyms: Line.synonyms, formula: Line.formula, cas_number: Line.cas_number,
 chebi_id: Line.chebi_id, cid: Line.pubchem_compound_id, aglycones: Line.aglycones, created_at: Line.created_at, updated_at: Line.updated_at}) */
 
-## Querying
+### Querying
 
 /* EXAMPLES TO TEST THE MAPPING
 Always check for the existence of the data before updating, creating relations or even deleting, as Neo4j does not throw any errors 
@@ -89,7 +89,7 @@ REMOVE s:phenols_classfication */
 /* MATCH (phenol_to_chebi) DELETE phenol_to_chebi */ (not sure)
 
 
-## Matching label and removing
+### Matching label and removing
 
 /* MATCH (s:phenol_to_pubmed) #to remove any unnecessary nodes
 REMOVE s:phenol_to_pubmed */
@@ -97,7 +97,7 @@ REMOVE s:phenol_to_pubmed */
 /* MATCH (s:phenol_to_chebi)
 REMOVE s:phenol_to_chebi */
 
-##DELETE relationships between nodes
+### DELETE relationships between nodes
 
 *To delete the relationship between two nodes, make sure to specify the relation type else it may remove existing relationships
 /* MATCH(:phenol_to_chebi)-[r:REFERENCED_IN](:phenolcompounds) DELETE r */
