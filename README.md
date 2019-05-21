@@ -1,6 +1,6 @@
 #    XML parsing using Python & Neo4j implementation
 
-#Creating a consolidated graph database and mapping relations between the databases using Neo4j. This includes XML file conversion into CSV using Python ElementTree module
+##Creating a consolidated graph database and mapping relations between the databases using Neo4j. This includes XML file conversion into CSV using Python ElementTree module
 
 ### Installation
 https://neo4j.com/download-center/#releases (install the Community version)-- 
@@ -10,33 +10,18 @@ make sure to set up the home directory so we can run through the command line
 
 *Ensure Homebrew is installed before you think of using it
 
-if not run this on command line: ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+*if not run this on command line: ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-For better understanding : https://docs.brew.sh/Installation
+*For better understanding : https://docs.brew.sh/Installation
 
-Then on command line run: Brew cask Install neo4j
-
-*You will see something like this: 
- 
- home:         /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec
-  config:       /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec/conf
-  logs:         /Users/aginni/opt/brew/var/log/neo4j
-  plugins:      /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec/plugins
-  *import:       /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec/import
-  data:         /Users/aginni/opt/brew/var/neo4j/data
-  certificates: /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec/certificates
-  run:          /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec/run
-
-Starting Neo4j.
-Started neo4j (pid 72115). It is available at http://localhost:7474/. #Copy this to your browser to launch neo4j
-There may be a short delay until the server is ready.
-See /Users/aginni/opt/brew/var/log/neo4j/neo4j.log for current status.
+*Then on command line run: Brew cask Install neo4j
 
 ### Load CSV files WITH HEADERS 
 
-*neo4j which will create the nodes with their properties while loading
-* Neo4j cannot find the file unless it is in the neo4j imports directory.Make sure the data is in neo4j imports directory
+*neo4j which will create the nodes with their properties once loaded the file on the DB
+* Neo4j cannot find the file unless it is in the neo4j imports directory. Make sure the data is in neo4j imports directory
 
+#### Example:
 *phenolsdata directory is copied to the neo4j imports
 cp /Users/aginni/Documents/phenolsdata/phenols_classification.csv /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec/import/phenolsdata/
 
