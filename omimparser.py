@@ -59,3 +59,37 @@ def omimparser(self):
 
 file = ('/Users/aginni/Documents/omim/omimTitles.txt')
 omim = omimparser(file)
+
+## Using pandas on jupyter notebook
+
+import pandas as pd
+import re
+
+data = pd.read_csv("/Users/aginni/Documents/omim/omimgenemap2.txt", sep = "\t",index_col = 0,skiprows = 3)
+# print(data)
+
+## Splitting Phenotypes columns by comma, n is no of splits, expand is to keep the split values in separate columns 
+ph_type = data["Phenotypes"].str.replace("},", "};")
+ph_type =ph_type.str.replace("],", "];")
+# print(ph_type)
+
+for i in ph_type:
+#     print(i)
+#     if i.str.find(';') != -1: 
+    print(i.str)
+#continue
+#     else:
+#         temp = i.split(',', expand = True)
+#         print(temp)
+        
+        
+        
+# ph_type1 = ph_type.str.split(";", n=1,expand = True)
+
+# print(ph_type1)
+
+## extaction using regex
+# data["Phenotype_no"] = data["Phenotypes"].str.extract("\W").astype(str) # works but does not not give the ids
+
+# data["Phenotype_no"] = data["Phenotypes"].apply(lambda x: re.search([[r'\d+']], x).group()) #not working
+# data.head()
