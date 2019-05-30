@@ -1,0 +1,49 @@
+LOAD CSV WITH HEADERS FROM 'file:///drugcsvdata/drugs.csv' AS Line CREATE (:Drugs{drugbank_id: Line.drugbank_id,description:Line.description,cas_number:Line.cas_number,pubmed_id:Line.pubmed_id,resource:Line.resource,identifier:Line.identifier}) 
+
+LOAD CSV WITH HEADERS FROM 'file:///drugcsvdata/drugpathways.csv' AS Line CREATE (:DrugPathways{drugbank_id:Line.drugbank_id,smpdb_id:Line.smpdb_id,pathway:Line.pathway,uniprot_id:Line.uniprot_id,target_id:Line.target_id})
+
+LOAD CSV WITH HEADERS FROM 'file:///drugcsvdata/drug2Mesh.csv' AS Line CREATE (:Drug_MeSH{drugbank_id:Line.drugbank_id,category:Line.categoryname.text,mesh_id:Line.mesh_id})
+
+
+### Drugs to Pubmed ###
+
+MATCH(a:PubMed) MATCH(b:Drugs) WHERE a.pmid = b.pubmed_id CREATE (a)<-[:SAMEAS]-(b) RETURN a,b
+MATCH(:PubMed)-[r:SAMEAS]-(:Drugs) DELETE r #
+ 
+### Drugs to HMDBMetabolites ###
+
+MATCH(a:Drugs) MATCH(b:HMDBMetabolites) WHERE a.identifier = b.kegg_id CREATE (a)-[:SAMEAS]->(b) RETURN a, b 
+
+MATCH(a:HMDBMetabolites) MATCH(b:Drugs) WHERE a.drugbank_id=b.drugbank_id CREATE (a)-[:SAMEAS]->(b) RETURN a, b
+
+MATCH(a:Drugs) MATCH(b:HMDBMetabolites) WHERE a.identifier=b.cid CREATE (a) -[:SAMEAS]->(b)RETURN a, b
+
+MATCH(a:Drugs) MATCH(b:HMDBMetabolites) WHERE a.identifier=b.wikipedia_id CREATE (a)-[:SAMEAS]->(b) RETURN a, b
+
+### Drugs to Compound ###
+
+MATCH(a:Drugs) MATCH(b:Compound) WHERE a.identifier=b.cid CREATE (a)<-[:SAMEAS]-(b) RETURN a, b
+
+### Drugs to Saliva Metabolites ###
+
+
+MATCH(a:Drugs) MATCH(b:Salivametabolites) WHERE a.identifier = b.kegg_id CREATE (a)-[:SAMEAS]->(b) RETURN a, b
+
+MATCH(a:Salivametabolites) MATCH(b:Drugs) WHERE a.drugbank_id=b.drugbank_id CREATE (a)-[:SAMEAS]->(b) RETURN a, b
+
+MATCH(a:Drugs) MATCH(b:Salivametabolites) WHERE a.identifier=b.cid CREATE (a) -[:SAMEAS]->(b)RETURN a, b
+
+MATCH(a:Drugs) MATCH(b:Salivametabolites) WHERE a.identifier=b.wikipedia_id CREATE (a)-[:SAMEAS]->(b) RETURN a, b
+
+### Drugs to PhenolCompounds ###
+
+MATCH(a:Drugs) MATCH(b:PhenolCompounds) WHERE a.identifier=b.cid CREATE (a) -[:SAMEAS]->(b)RETURN a, b
+
+MATCH(a:Drugs) MATCH(b:HMDBProteins) WHERE a.identifier=b.uniprot_id CREATE(a)-[:SAMEAS]->(b) RETURN a, b 
+
+MATCH(a:Drugs) MATCH(b:Saliva_Proteins) WHERE a.identifier=b.uniprot_id CREATE(a)-[:SAMEAS]->(b) RETURN a, b (no matching)
+
+MATCH(a:DrugPathways) MATCH(b:HMDBProteins) WHERE a.uniprot_id =b.uniprot_id CREATE(a)-[:SAMEAS]->(b) RETURN a, b 
+MATCH(a:DrugPathways) MATCH(b:Saliva_Proteins) WHERE a.uniprot_id =b.uniprot_id CREATE(a)-[:SAMEAS]->(b) RETURN a, b
+
+MATCH(a)MATCH(b) WHERE a. RETURN a, b LIMIT 10
