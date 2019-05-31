@@ -53,8 +53,6 @@ salivacsv.close()
 
 * Neo4j cannot find the path to file on your local machine unless it is in the neo4j imports directory. Make sure the data is in neo4j imports directory
 
-###### Example:
-
 *phenolsdata directory is copied to the neo4j imports*
 
 ```neo4j
