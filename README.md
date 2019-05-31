@@ -115,8 +115,7 @@ MATCH (s:phenol_to_chebi) REMOVE s:phenol_to_chebi
 
 ###### Example:
 
-``` MATCH(:phenol_to_chebi)-[r:REFERENCED_IN](:phenolcompounds) DELETE r 
-```
+``` MATCH(:phenol_to_chebi)-[r:REFERENCED_IN](:phenolcompounds) DELETE r  ```
 
 * Same as above,but here we are deleting the relation just between the two properties of the nodes
 
