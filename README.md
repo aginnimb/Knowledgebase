@@ -1,20 +1,13 @@
-#    XML parsing using Python & Neo4j implementation
+#  XML parsing using Python & Neo4j implementation
 
-##Creating a consolidated graph database and mapping relations between the databases using Neo4j. This includes XML file conversion into CSV using Python ElementTree module. Refer xml_parser.py in the repository for python code
+This repository contains python scripts to parse various file formats whihc includes XML, .txt etc and Also includes Neo4j scripts to upload CSV files and mapping relations between the nodes.
 
-### Installation
-https://neo4j.com/download-center/#releases (install the Community version)-- 
-make sure to set up the home directory so we can run through the command line
 
-### Installation using Home Brew: (Popular package manager for macOS)
 
-*Ensure Homebrew is installed before you think of using it
-
-*if not run this on command line: ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-*For better understanding : https://docs.brew.sh/Installation
-
-*Then on command line run: Brew cask Install neo4j
+## Installation
+[Link to install neo4j](https://neo4j.com/download-center/#releases) 
+--suggested Community version-- 
+*make sure to set up the home directory so we can run through the command line*
 
 ### Load CSV files WITH HEADERS 
 
