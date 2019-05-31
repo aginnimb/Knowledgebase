@@ -66,7 +66,8 @@ cp /Users/aginni/Documents/phenolsdata/phenols_classification.csv /Users/aginni/
 
 ###### Example:
 
-```LOAD CSV WITH HEADERS FROM 'file:///phenolsdata/phenols_classification.csv' AS Line CREATE (:phenols_classfication {class: Line.class, subclass: Line.subclass, compound_name: Line.compound_name, phenol_id: Line.phenol_id, mol_wt: Line.mol_wt, formula: Line.formula})
+```
+LOAD CSV WITH HEADERS FROM 'file:///phenolsdata/phenols_classification.csv' AS Line CREATE (:phenols_classfication {class: Line.class, subclass: Line.subclass, compound_name: Line.compound_name, phenol_id: Line.phenol_id, mol_wt: Line.mol_wt, formula: Line.formula})
 ```
 
 ### Querying
@@ -102,7 +103,8 @@ MATCH (s:phenols_classfication) SET s:Phenols_Classification REMOVE s:phenols_cl
 
 ### Matching label and removing
 
-``` MATCH (s:phenol_to_pubmed) REMOVE s:phenol_to_pubmed  #to remove any unnecessary nodes
+``` 
+MATCH (s:phenol_to_pubmed) REMOVE s:phenol_to_pubmed  #to remove any unnecessary nodes
 
 MATCH (s:phenol_to_chebi) REMOVE s:phenol_to_chebi
 ```
@@ -113,12 +115,13 @@ MATCH (s:phenol_to_chebi) REMOVE s:phenol_to_chebi
 
 ###### Example:
 
-``` MATCH(:phenol_to_chebi)-[r:REFERENCED_IN](:phenolcompounds) DELETE r ```
+``` MATCH(:phenol_to_chebi)-[r:REFERENCED_IN](:phenolcompounds) DELETE r 
+```
 
 * Same as above,but here we are deleting the relation just between the two properties of the nodes
 
-``` MATCH (r:phenol_to_chebi{phenol_id : '421'})-[deleteme:SAME_AS]->(x:CHEBI{chebi_id:'CHEBI:62023'})
-DELETE deleteme;
+``` 
+MATCH (r:phenol_to_chebi{phenol_id : '421'})-[deleteme:SAME_AS]->(x:CHEBI{chebi_id:'CHEBI:62023'}) DELETE deleteme;
 ```
 
 
