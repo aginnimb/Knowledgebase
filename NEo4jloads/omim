@@ -1,0 +1,3 @@
+loading OMIM data on neo4j 
+LOAD CSV WITH HEADERS FROM 'file:///omim.csv' AS Line 
+CREATE(:Omim{mim_number:Line.MimNumber,gene_symbol:Line.GeneSymbol, gene_name:Line.GeneName,approved_symbol:Line.ApprovedSymbol, entrez_gene_id:Line.EntrezGeneID,ensembl_id:Line.EnsemblGeneID,phenotype:Line.Phenotypes,phenotype_id:Line.phenotype_id,mouse_gene:Line.mouse_gene,mouse_gene_id:Line.mouse_gene_id })
