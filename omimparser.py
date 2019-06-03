@@ -12,7 +12,7 @@
 import pandas as pd
 import re
 
-data = pd.read_csv("/Users/anu/Desktop/omimgenemap2.txt", sep = "\t",index_col = 0,skiprows = 3, skipfooter = 63,engine='python')
+data = pd.read_csv("/Users/aginni/Documents/omim/omimgenemap2.txt", sep = "\t",index_col = 0,skiprows = 3, skipfooter = 63,engine='python')
 # print(data)
 
 ## extracting phenotype_ids from from 'Phenotypes' column
