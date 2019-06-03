@@ -1,3 +1,4 @@
+## downloading files from web using python urllib module
 # import urllib.request
 # print("Beginning file download with urllib...")
 # url = 'https://data.omim.org/downloads/1r6-54cxR_inA4Zf_bzd0w/mimTitles.txt'
@@ -7,42 +8,45 @@
 # url = 'https://data.omim.org/downloads/1r6-54cxR_inA4Zf_bzd0w/genemap2.txt'
 # urllib.request.urlretrieve(url,'/Users/aginni/Documents/omim/omimgenemap2.txt')
 
-# omimdata= []
-def omimparser(self):
-	with open(file,'r') as mim:
-		data = mim.readlines()
-		for elem in data:
-			if elem.startswith('# Prefix'): 
-				data = elem.strip('/n').split('\t')[1:]
-				print(data)						
-		# for row in data:
-		# 	print(row)
-			# if line.startswith('# Prefix'): 
-			# 	header =  line.strip('/n').split('\t')[1:]
-			# elif "Preferred Title; symbol" in line:
-			# 	title = line.strip().split(";")[0]
-			# elif "Preferred Title; symbol" in line:
-			# 	symbol = line.strip().split(";")[1]
-			# 	print(symbol)
+## ETL using Python Pandas, not efficient but does the job 
+import pandas as pd
+import re
 
-				#print(header)
-				
-				# data = list([header,colvalues])
-				# data = dict(zip(colnames,colvalues))
-				# print(data)
+data = pd.read_csv("/Users/anu/Desktop/omimgenemap2.txt", sep = "\t",index_col = 0,skiprows = 3, skipfooter = 63,engine='python')
+# print(data)
+    
+## extracting phenotype_ids from from 'Phenotypes' column
+data[['phenotype_id']]  = data.Phenotypes.str.extract('(\d{6})')
+# print(phenotype_id)
 
+#defining new columns with the split values
+data[['mouse_gene','mouse_gene_id']]= data["Mouse Gene Symbol/ID"].str.split(" ", n=1,expand = True)
+# print(data['mouse_gene_id'])
 
-omimdata= []	
+#replacing na's with empty string
+data[['mouse_gene_id']] =data[['mouse_gene_id']].fillna('unknown')
+
+# data[["mouse_gene_id"]] = data[["mouse_gene_id"]].str.replace('(',"").str.replace(')',"") #it works but not on dataframe,hence following method
+
+test= data['mouse_gene_id'] # to string, as dataframe doesnot have str attribute
+data['mouse_gene_id']=test.str.replace("(","").str.replace(')',"")
+#print(data['mouse_gene_id'])
+
+data.to_csv("omim.csv", index = False) #writing dataframe into csv
+
+## Tried following ETL using python pandas, need corrections
+
+# omimdata= []	
 		
-def omimparser(self):
-	self.omimkey = ["Mim Number","Preferred Title","symbol","Alternative Title(s)","symbol(s)","Included Title(s)","symbols"]
-	self.omimvals = {key:None for key in self.omimkey}
+# def omimparser(self):
+# 	self.omimkey = ["Mim Number","Preferred Title","symbol","Alternative Title(s)","symbol(s)","Included Title(s)","symbols"]
+# 	self.omimvals = {key:None for key in self.omimkey}
 
-	with open(file,'r') as mim:
-		for line in mim.readlines().split(','):
-			print(line)
-			for i,colnames in enumerate(self.omimkey):
-				omimvals[omimkey] = omimkey[i]
+# 	with open(file,'r') as mim:
+# 		for line in mim.readlines().split(','):
+# 			print(line)
+# 			for i,colnames in enumerate(self.omimkey):
+# 				omimvals[omimkey] = omimkey[i]
 					# if "Preferred Title; symbol" in line:
 					# 	self.omimvals["Preferred_title"]= line.split(";")[0]
 					# 	self.omimvals["symbol"] = line.split(";")[1]
@@ -57,26 +61,26 @@ def omimparser(self):
 				# print(omimdata)
 
 
-file = ('/Users/aginni/Documents/omim/omimTitles.txt')
-omim = omimparser(file)
+# file = ('/Users/aginni/Documents/omim/omimTitles.txt')
+# omim = omimparser(file)
 
-## Using pandas on jupyter notebook
+# ## Using pandas on jupyter notebook
 
-import pandas as pd
-import re
+# import pandas as pd
+# import re
 
-data = pd.read_csv("/Users/aginni/Documents/omim/omimgenemap2.txt", sep = "\t",index_col = 0,skiprows = 3)
-# print(data)
+# data = pd.read_csv("/Users/aginni/Documents/omim/omimgenemap2.txt", sep = "\t",index_col = 0,skiprows = 3)
+# # print(data)
 
-## Splitting Phenotypes columns by comma, n is no of splits, expand is to keep the split values in separate columns 
-ph_type = data["Phenotypes"].str.replace("},", "};")
-ph_type =ph_type.str.replace("],", "];")
-# print(ph_type)
+# ## Splitting Phenotypes columns by comma, n is no of splits, expand is to keep the split values in separate columns 
+# ph_type = data["Phenotypes"].str.replace("},", "};")
+# ph_type =ph_type.str.replace("],", "];")
+# # print(ph_type)
 
-for i in ph_type:
-#     print(i)
-#     if i.str.find(';') != -1: 
-    print(i.str)
+# for i in ph_type:
+# #     print(i)
+# #     if i.str.find(';') != -1: 
+#     print(i.str)
 #continue
 #     else:
 #         temp = i.split(',', expand = True)
