@@ -7,7 +7,7 @@ def parsedrugbank(drugbank, writer):
 		drugbank_id = drug.find('nsstring:drugbank-id',ns)
 		for categories in drug.findall('nsstring:categories',ns):
 			for category in categories.findall('nsstring:category',ns):
-				categoryname = category.find('nsstring:category',ns) 
+				categoryname = category.find('nsstring:category',ns)
 				mesh_id= category.find('nsstring:mesh-id',ns)
 				try:
 					v_mesh_id = mesh_id.text

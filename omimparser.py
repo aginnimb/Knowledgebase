@@ -2,19 +2,19 @@
 # import urllib.request
 # print("Beginning file download with urllib...")
 # url = 'https://data.omim.org/downloads/1r6-54cxR_inA4Zf_bzd0w/mimTitles.txt'
-# urllib.request.urlretrieve(url, '/Users/aginni/Documents/omim/omimTitles.txt')   
+# urllib.request.urlretrieve(url, '/Users/aginni/Documents/omim/omimTitles.txt')
 															## importing files from OMIM web browser using urllib.request module
 # print("Beginning file download with urllib...")
 # url = 'https://data.omim.org/downloads/1r6-54cxR_inA4Zf_bzd0w/genemap2.txt'
 # urllib.request.urlretrieve(url,'/Users/aginni/Documents/omim/omimgenemap2.txt')
 
-## ETL using Python Pandas, not efficient but does the job 
+## ETL using Python Pandas, not efficient but does the job
 import pandas as pd
 import re
 
 data = pd.read_csv("/Users/anu/Desktop/omimgenemap2.txt", sep = "\t",index_col = 0,skiprows = 3, skipfooter = 63,engine='python')
 # print(data)
-    
+
 ## extracting phenotype_ids from from 'Phenotypes' column
 data[['phenotype_id']]  = data.Phenotypes.str.extract('(\d{6})')
 # print(phenotype_id)
@@ -30,14 +30,14 @@ data[['mouse_gene_id']] =data[['mouse_gene_id']].fillna('unknown')
 
 test= data['mouse_gene_id'] # to string, as dataframe doesnot have str attribute
 data['mouse_gene_id']=test.str.replace("(","").str.replace(')',"")
-#print(data['mouse_gene_id'])
+#print(data)
 
 data.to_csv("omim.csv", index = False) #writing dataframe into csv
 
 ## Tried following ETL using python pandas, need corrections
 
-# omimdata= []	
-		
+# omimdata= []
+
 # def omimparser(self):
 # 	self.omimkey = ["Mim Number","Preferred Title","symbol","Alternative Title(s)","symbol(s)","Included Title(s)","symbols"]
 # 	self.omimvals = {key:None for key in self.omimkey}
@@ -72,22 +72,22 @@ data.to_csv("omim.csv", index = False) #writing dataframe into csv
 # data = pd.read_csv("/Users/aginni/Documents/omim/omimgenemap2.txt", sep = "\t",index_col = 0,skiprows = 3)
 # # print(data)
 
-# ## Splitting Phenotypes columns by comma, n is no of splits, expand is to keep the split values in separate columns 
+# ## Splitting Phenotypes columns by comma, n is no of splits, expand is to keep the split values in separate columns
 # ph_type = data["Phenotypes"].str.replace("},", "};")
 # ph_type =ph_type.str.replace("],", "];")
 # # print(ph_type)
 
 # for i in ph_type:
 # #     print(i)
-# #     if i.str.find(';') != -1: 
+# #     if i.str.find(';') != -1:
 #     print(i.str)
 #continue
 #     else:
 #         temp = i.split(',', expand = True)
 #         print(temp)
-        
-        
-        
+
+
+
 # ph_type1 = ph_type.str.split(";", n=1,expand = True)
 
 # print(ph_type1)
