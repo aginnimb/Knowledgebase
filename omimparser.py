@@ -10,9 +10,9 @@
 
 ## ETL using Python Pandas, not efficient but does the job
 import pandas as pd
-import re
+# import re
 
-data = pd.read_csv("/Users/aginni/Documents/omim/omimgenemap2.txt", sep = "\t",index_col = 0,skiprows = 3, skipfooter = 63,engine='python')
+data = pd.read_csv("/Users/aginni/Documents/omim/omimgenemap2.txt", sep = "\t",index_col = 0,skiprows = 3, skipfooter = 63,engine = 'python')
 # print(data)
 
 ## extracting phenotype_ids from from 'Phenotypes' column
@@ -32,7 +32,7 @@ test= data['mouse_gene_id'] # to string, as dataframe doesnot have str attribute
 data['mouse_gene_id']=test.str.replace("(","").str.replace(')',"")
 #print(data)
 
-data.to_csv("omim.csv", index = False) #writing dataframe into csv
+data.to_csv("/Users/aginni/Documents/omim/omim.csv", index = False) #writing dataframe into csv
 
 ## Tried following ETL using python pandas, need corrections
 
