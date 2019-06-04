@@ -10,29 +10,58 @@
 
 ## ETL using Python Pandas, not efficient but does the job
 import pandas as pd
-# import re
+import numpy as np 
+from itertools import chain
+import re
 
 data = pd.read_csv("/Users/aginni/Documents/omim/omimgenemap2.txt", sep = "\t",index_col = 0,skiprows = 3, skipfooter = 63,engine = 'python')
 # print(data)
+# print(data.columns)
 
-## extracting phenotype_ids from from 'Phenotypes' column
-data[['phenotype_id']]  = data.Phenotypes.str.extract('(\d{6})')
-# print(phenotype_id)
+data.columns = ['GenomicPositionStart','GenomicPositionEnd','CytoLocation','ComputedCytoLocation','Mim_Number','GeneSymbols','GeneName','ApprovedSymbol','EntrezGene_ID','EnsemblGene_ID','Comments','Phenotypes','MouseGeneSymbol/ID']
 
-#defining new columns with the split values
-data[['mouse_gene','mouse_gene_id']]= data["Mouse Gene Symbol/ID"].str.split(" ", n=1,expand = True)
-# print(data['mouse_gene_id'])
+# return list from series of colon-separated strings
+def chainer(s):
+    return list(chain.from_iterable(s.str.split(';')))
 
-#replacing na's with empty string
-data[['mouse_gene_id']] =data[['mouse_gene_id']].fillna('unknown')
+data['Phenotypes'].fillna('', inplace=True)			# # calculate lengths of splits
+lens = data['Phenotypes'].str.split(';').map(len)		# # print(data['Phenotypes'])
 
-# data[["mouse_gene_id"]] = data[["mouse_gene_id"]].str.replace('(',"").str.replace(')',"") #it works but not on dataframe,hence following method
+# # create new dataframe, repeating or chaining as appropriate
+final = pd.DataFrame({'Mim_Number': np.repeat(data['Mim_Number'], lens),'GeneSymbols':np.repeat(data['GeneSymbols'],lens),'GeneName':np.repeat(data['GeneName'],lens),'Phenotypes': chainer(data['Phenotypes'])})
+# print("Before:\n", data)
+# print("After:\n", test)
+final['phenotype_id'] = final['Phenotypes'].str.extract('(\d{6})')
+sub = '(\d{6})'
+final['Phenotypes']= final['Phenotypes'].str.replace(sub, '')
+final['Phenotypes']= final['Phenotypes'].str.replace('{', '')
+final['Phenotypes']= final['Phenotypes'].str.replace('}', '')
+final['Phenotypes']= final['Phenotypes'].str.replace('[', '')
+final['Phenotypes']=final['Phenotypes'].str.replace(']', '')
+final['Phenotypes']= final['Phenotypes'].str.replace('((\d))', '')
+# final['Phenotypes']= final['Phenotypes'].strip('()') 	#not working
+print(final['Phenotypes'])
 
-test= data['mouse_gene_id'] # to string, as dataframe doesnot have str attribute
-data['mouse_gene_id']=test.str.replace("(","").str.replace(')',"")
-#print(data)
+# final.to_csv("finalomim.csv",index=False)
 
-data.to_csv("/Users/aginni/Documents/omim/omim.csv", index = False) #writing dataframe into csv
+# ## extracting phenotype_ids from from 'Phenotypes' column
+# data[['phenotype_id']]  = data.Phenotypes.str.extract('(\d{6})')
+# # print(phenotype_id)
+
+# #defining new columns with the split values
+# data[['mouse_gene','mouse_gene_id']]= data["Mouse Gene Symbol/ID"].str.split(" ", n=1,expand = True)
+# # print(data['mouse_gene_id'])
+
+# #replacing na's with empty string
+# data[['mouse_gene_id']] =data[['mouse_gene_id']].fillna('unknown')
+
+# # data[["mouse_gene_id"]] = data[["mouse_gene_id"]].str.replace('(',"").str.replace(')',"") #it works but not on dataframe,hence following method
+
+# test= data['mouse_gene_id'] # to string, as dataframe doesnot have str attribute
+# data['mouse_gene_id']=test.str.replace("(","").str.replace(')',"")
+# #print(data)
+
+# data.to_csv("/Users/aginni/Documents/omim/omim.csv", index = False) #writing dataframe into csv
 
 ## Tried following ETL using python pandas, need corrections
 
