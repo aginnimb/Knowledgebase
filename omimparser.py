@@ -24,25 +24,31 @@ data.columns = ['GenomicPositionStart','GenomicPositionEnd','CytoLocation','Comp
 def chainer(s):
     return list(chain.from_iterable(s.str.split(';')))
 
-data['Phenotypes'].fillna('', inplace=True)			# # calculate lengths of splits
-lens = data['Phenotypes'].str.split(';').map(len)		# # print(data['Phenotypes'])
+data['Phenotypes'].fillna('', inplace=True)			
+lens = data['Phenotypes'].str.split(';').map(len)	#calculate lengths of splits	
+# # print(data['Phenotypes'])
 
-# # create new dataframe, repeating or chaining as appropriate
+# # create new dataframe, repeating or chaining as appropriate and with necessary columns
 final = pd.DataFrame({'Mim_Number': np.repeat(data['Mim_Number'], lens),'GeneSymbols':np.repeat(data['GeneSymbols'],lens),'GeneName':np.repeat(data['GeneName'],lens),'Phenotypes': chainer(data['Phenotypes'])})
 # print("Before:\n", data)
 # print("After:\n", test)
-final['phenotype_id'] = final['Phenotypes'].str.extract('(\d{6})')
-sub = '(\d{6})'
-final['Phenotypes']= final['Phenotypes'].str.replace(sub, '')
-final['Phenotypes']= final['Phenotypes'].str.replace('{', '')
-final['Phenotypes']= final['Phenotypes'].str.replace('}', '')
-final['Phenotypes']= final['Phenotypes'].str.replace('[', '')
-final['Phenotypes']=final['Phenotypes'].str.replace(']', '')
-final['Phenotypes']= final['Phenotypes'].str.replace('((\d))', '')
-# final['Phenotypes']= final['Phenotypes'].strip('()') 	#not working
-print(final['Phenotypes'])
+# faster way to extract the column substrings than doing it individually like line[42-49
+x = final['Phenotypes'].str.extract('.?([^{}[\]]*).?, (\d{6})') 
+final['phenotype_id'] = x[1]
+final['Phenotypes'] = x[0]
+# print(final)
 
-# final.to_csv("finalomim.csv",index=False)
+final.to_csv("finalomim.csv",index=False)
+
+# final['phenotype_id'] = final['Phenotypes'].str.extract('(\d{6})')
+# sub = '(\d{6})'
+# final['Phenotypes']= final['Phenotypes'].str.replace(sub, '')
+# final['Phenotypes']= final['Phenotypes'].str.replace('{', '')
+# final['Phenotypes']= final['Phenotypes'].str.replace('}', '')
+# final['Phenotypes']= final['Phenotypes'].str.replace('[', '')
+# final['Phenotypes']=final['Phenotypes'].str.replace(']', '')
+# final['Phenotypes']= final['Phenotypes'].str.replace('((\d))', '')
+
 
 # ## extracting phenotype_ids from from 'Phenotypes' column
 # data[['phenotype_id']]  = data.Phenotypes.str.extract('(\d{6})')
