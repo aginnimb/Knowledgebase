@@ -3,3 +3,7 @@
 USING PERIODIC COMMIT 500
 LOAD CSV WITH HEADERS FROM 'file:///omim.csv' AS Line 
 CREATE(:OMIM2Gene{mim_number:Line.Mim_Number,gene_symbol:Line.GeneSymbol, gene_name:Line.GeneName,EntrezGene_id:Line.EntrezGene_ID,EnsemblGene_id:Line.EnsemblGene_ID,phenotypes:Line.Phenotypes,phenotype_id:Line.phenotype_id})
+
+## creating relationship with existing database
+
+MATCH(n:OMIM2Gene) MATCH(m:SalivaPathways_Diseases) WHERE n.mim_number= m.omim_id CREATE (n)<-[:SAME_AS]-(m) RETURN n,m
