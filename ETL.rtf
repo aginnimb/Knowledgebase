@@ -7,3 +7,5 @@ awk -F '{print $1 "\t" | sub("&CHEBI:",$2) print $2}' phenol_to_chebi.csv
 awk 'BEGIN\{FS=OFS=","} {$2 = "CHEBI:"$2; print}' phenol_to_chebi.csv > temp.csv
 
 sed 's/CHEBI:chebi_id chebi_id/g' phenol_to_chebi.csv}
+
+paste -d ',' <(csvcut -d',' -c 1,2,4,6,7,8 phenolcompounds.csv) <(csvcut -d',' -c 10 PhenolCompounds1.csv) > phenolcompoundstrim.csv 
