@@ -7,7 +7,7 @@ LOAD CSV WITH HEADERS FROM 'file:///drugcsvdata/drug2Mesh.csv' AS Line CREATE (:
 
 ### Drugs to Pubmed ###
 
-MATCH(a:PubMed) MATCH(b:Drugs) WHERE a.pmid = b.pubmed_id CREATE (a)<-[:SAMEAS]-(b) RETURN a,b
+MATCH(a:PubMed) MATCH(b:Drugs) WHERE a.pmid = b.pmid CREATE (a)<-[:SAMEAS]-(b) RETURN a,b
 MATCH(:PubMed)-[r:SAMEAS]-(:Drugs) DELETE r #
  
 ### Drugs to HMDBMetabolites ###
@@ -29,11 +29,11 @@ MATCH(a:Drugs) MATCH(b:Compound) WHERE a.identifier=b.cid CREATE (a)<-[:SAMEAS]-
 
 MATCH(a:Drugs) MATCH(b:Salivametabolites) WHERE a.identifier = b.kegg_id CREATE (a)-[:SAMEAS]->(b) RETURN a, b
 
-MATCH(a:Salivametabolites) MATCH(b:Drugs) WHERE a.drugbank_id=b.drugbank_id CREATE (a)-[:SAMEAS]->(b) RETURN a, b
+MATCH(a:SalivaMetabolites) MATCH(b:Drugs) WHERE a.drugbank_id=b.drugbank_id CREATE (a)-[:SAMEAS]->(b) RETURN a, b
 
-MATCH(a:Drugs) MATCH(b:Salivametabolites) WHERE a.identifier=b.cid CREATE (a) -[:SAMEAS]->(b)RETURN a, b
+MATCH(a:Drugs) MATCH(b:SalivaMetabolites) WHERE a.identifier=b.cid CREATE (a) -[:SAMEAS]->(b)RETURN a, b
 
-MATCH(a:Drugs) MATCH(b:Salivametabolites) WHERE a.identifier=b.wikipedia_id CREATE (a)-[:SAMEAS]->(b) RETURN a, b
+MATCH(a:Drugs) MATCH(b:SalivaMetabolites) WHERE a.identifier=b.wikipedia_id CREATE (a)-[:SAMEAS]->(b) RETURN a, b
 
 ### Drugs to PhenolCompounds ###
 
@@ -41,9 +41,9 @@ MATCH(a:Drugs) MATCH(b:PhenolCompounds) WHERE a.identifier=b.cid CREATE (a) -[:S
 
 MATCH(a:Drugs) MATCH(b:HMDBProteins) WHERE a.identifier=b.uniprot_id CREATE(a)-[:SAMEAS]->(b) RETURN a, b 
 
-MATCH(a:Drugs) MATCH(b:Saliva_Proteins) WHERE a.identifier=b.uniprot_id CREATE(a)-[:SAMEAS]->(b) RETURN a, b (no matching)
+MATCH(a:Drugs) MATCH(b:SalivaProteins) WHERE a.identifier=b.uniprot_id CREATE(a)-[:SAMEAS]->(b) RETURN a, b (no matching)
 
 MATCH(a:DrugPathways) MATCH(b:HMDBProteins) WHERE a.uniprot_id =b.uniprot_id CREATE(a)-[:SAMEAS]->(b) RETURN a, b 
-MATCH(a:DrugPathways) MATCH(b:Saliva_Proteins) WHERE a.uniprot_id =b.uniprot_id CREATE(a)-[:SAMEAS]->(b) RETURN a, b
+MATCH(a:DrugPathways) MATCH(b:SalivaProteins) WHERE a.uniprot_id =b.uniprot_id CREATE(a)-[:SAMEAS]->(b) RETURN a, b
 
 MATCH(a)MATCH(b) WHERE a. RETURN a, b LIMIT 10
