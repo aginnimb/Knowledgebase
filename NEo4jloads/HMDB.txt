@@ -1,29 +1,18 @@
 LOAD CSV WITH HEADERS FROM 'file:///HMDB_CSVdata/hmdb_metabolites.csv' AS Line
 CREATE (:HMDBMetabolites {accession:Line.Acession, name:Line.name, cs_description:Line.cs_description, iupac_name:Line.iupac_name, cas_number:Line.cas_number, kingdom:Line.kingdom, super_class:Line.super_class, taxa_class:Line.taxa_class, drugbank_id:Line.drugbank_id, chebi_id:Line.chebi_id, cid:Line.cid, phenol_id:Line.phenol_id, foodb_id:Line.foodb_id, knapsack_id:Line.knapsack_id, chemspider_id:Line.chemspider_id, kegg_id:Line.kegg_id, meta_cyc_id:Line.meta_cyc_id, bigg_id:Line.bigg_id, metlin_id:Line.metlin_id, pdb_id:Line.pdb_id, wikipedia_id:Line.wikipedia_id})
 
-MATCH (a:Compound) MATCH(b:HMDBMetabolites) WHERE a.cid = b.cid CREATE (a)<-[:SAMEAS]-(b) RETURN a,b
-MATCH (a:CHEBI) MATCH(b:HMDBMetabolites) WHERE a.chebi_id = b.chebi_id CREATE (a)<-[:SAMEAS]-(b) RETURN a,b
-
-
 LOAD CSV WITH HEADERS FROM 'file:///HMDB_CSVdata/hmdb_diseases.csv' AS Line
 CREATE(:HMDBDiseases{accession:Line.accession,disease:Line.disease,omim_id:Line.omim_id,pubmed_id:Line.pubmed_id})
-
 
 LOAD CSV WITH HEADERS FROM 'file:///HMDB_CSVdata/hmdb_pathways.csv' AS Line
 CREATE(:HMDBPathways{accession:Line.accession,cellular_location:Line.cellular_location,biospecimen:Line.biospecimen,pathway_name:Line.pathway_name,smpdb_id:Line.smpdb_id,kegg_map_id:Line.kegg_map_id})
 
-MATCH (a:HMDBPathways) MATCH(b:Pathway Interaction Database) WHERE a.pathway_name = b.name return a,b limit 10
-
 LOAD CSV WITH HEADERS FROM 'file:///HMDB_CSVdata/hmdb_proteins.csv' AS Line
 CREATE(:HMDBProteins{accession:Line.accession,protein_accession:Line.protein_accession,protein_name:Line.protein_name,uniprot_id:Line.uniprot_id,gene:Line.gene,protein_type:Line.protein_type})
-
-/Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec/import
 
 LOAD CSV WITH HEADERS FROM 'file:///HMDB_CSVdata/hmdb_ontology.csv' AS Line
 CREATE(:HMDBOntology{accession:Line.accession,ontology_term:Line.ontology_term,definition:Line.definition,parent_id:Line.parent_id,level:Line.level,type:Line.type,descendant_term:Line.descendant_term,descend_definition:Line.descend_definition,descend_parent_id:Line.descend_parent_id,descend_level:Line.descend_level,descend_type:Line.descend_type,subdescend_term:Line.subdescend_term,subdescend_definition:Line.subdescend_definition,subdescend_parent_id:Line.subdescend_parent_id,subdescend_level:Line.subdescend_level,subdescend_type:Line.subdescend_type,sub_subdescend_term:Line.sub_subdescend_term,sub_subdescend_def:Line.sub_subdescend_def,sub_subdescend_parent_id:Line.sub_subdescend_parent_id,sub_subdescend_level:Line.sub_subdescend_level,sub_subdescend_type:Line.sub_subdescend_type,lastdescend_term:Line.lastdescend_term,lastdescend_def:Line.lastdescend_def,lastdescend_parent_id:Line.lastdescend_parent_id,lastdescend_level:Line.lastdescend_level,lastdescend_type:Line.lastdescend_type})
 
-
 LOAD CSV WITH HEADERS FROM 'file:///HMDB_CSVdata/hmdb_metabolites.csv' AS row
 CREATE (:HMDBMetabolites {accession:row.acession, name:row.name, cs_description:row.cs_description, iupac_name:row.iupac_name, cas_number:row.cas_number, kingdom:row.kingdom, super_class:row.super_class, taxa_class:row.taxa_class, drugbank_id:row.drugbank_id, chebi_id:row.chebi_id, cid:row.cid, phenol_id:row.phenol_id, foodb_id:row.foodb_id, knapsack_id:row.knapsack_id, chemspider_id:row.chemspider_id, kegg_id:row.kegg_id, meta_cyc_id:row.meta_cyc_id, bigg_id:row.bigg_id, metlin_id:row.metlin_id, pdb_id:row.pdb_id, wikipedia_id:row.wikipedia_id})
 
-MATCH(a:HMDBDiseases) MATCH(b:DO) WHERE a.disease = b.name CREATE (a)-[:SAME_AS]->(b) RETURN a,b
