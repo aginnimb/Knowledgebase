@@ -108,7 +108,17 @@ MATCH (s:phenol_to_pubmed) REMOVE s:phenol_to_pubmed  #to remove any unnecessary
 
 MATCH (s:phenol_to_chebi) REMOVE s:phenol_to_chebi
 ```
+### Relationships between nodes
 
+Relation between nodes can be assigned by matching the labels and specifying the property nodes
+
+###### Example:
+```
+MATCH (a:Compound) MATCH(b:HMDBMetabolites) WHERE a.cid = b.cid CREATE (a)<-[:SAMEAS]-(b) RETURN a,b
+MATCH (a:CHEBI) MATCH(b:HMDBMetabolites) WHERE a.chebi_id = b.chebi_id CREATE (a)<-[:SAMEAS]-(b) RETURN a,b
+
+MATCH (a:HMDBPathways) MATCH(b:Pathway Interaction Database) WHERE a.pathway_name = b.name return a,b limit 10 # to check
+```
 ### DELETE relationships between nodes
 
 * To delete the relationship between two nodes, it is important to specify the relation type else it will remove all existing relationships that matches the condition :anguished: :flushed:
