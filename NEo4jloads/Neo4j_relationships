@@ -46,4 +46,10 @@ MATCH(a:CHEBI) MATCH(b:Salivametabolites) where a.chebi_id = b.chebi_id CREATE (
 
 MATCH(a:PhenolCompounds) MATCH(b:Salivametabolites) where a.phenol_id = b.phenol_id CREATE (a)-[r:SAMEAS]->(b) RETURN a,b
 
-###
+### HMDB to other nodes
+MATCH (a:Compound) MATCH(b:HMDBMetabolites) WHERE a.cid = b.cid CREATE (a)<-[:SAMEAS]-(b) RETURN a,b
+MATCH (a:CHEBI) MATCH(b:HMDBMetabolites) WHERE a.chebi_id = b.chebi_id CREATE (a)<-[:SAMEAS]-(b) RETURN a,b
+
+MATCH (a:HMDBPathways) MATCH(b:Pathway Interaction Database) WHERE a.pathway_name = b.name return a,b limit 10
+
+MATCH(a:HMDBDiseases) MATCH(b:DO) WHERE a.disease = b.name CREATE (a)-[:SAME_AS]->(b) RETURN a,b
