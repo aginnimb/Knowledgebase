@@ -1,0 +1,49 @@
+MATCH (r:phenol_to_chebi{phenol_id : '421'})
+MATCH (x:CHEBI{chebi_id:'CHEBI:62023'})
+RETURN r, x 
+
+MATCH (r:phenol_to_chebi{phenol_id : '421'})
+MATCH (x:CHEBI{chebi_id:'CHEBI:62023'})
+CREATE (r)-[:SAME_AS]->(x);
+
+MATCH (r:phenol_to_chebi{phenol_id : '421'})-[deleteme:SAME_AS]->(x:CHEBI{chebi_id:'CHEBI:62023'})
+DELETE deleteme;
+
+MATCH (a:phenol_to_chebi{chebi_id:'27475'})
+MATCH (b:phenolcompounds{phenol_id:'8'})
+CREATE (a)- [:REFERENCED_IN]->(b)
+RETURN a,b
+
+# relationship between Phenol_to_CHEBI & phenolcompounds
+MATCH (a:Phenol_to_CHEBI) MATCH (b:phenolcompounds)
+WHERE a.chebi_id = b.chebi_id
+CREATE (a)-[r:SAME_AS]->(b) RETURN a,b
+
+# no changes
+MATCH (a:PhenolCompounds) MATCH (b:CHEBI)
+WHERE a.chebi_id = b.chebi_id
+CREATE (a)-[r:SAME_AS]->(b) RETURN a,b
+
+### Drugs to Other Nodes ###
+
+MATCH(a:PubMed) MATCH(b:Drugs) WHERE a.pmid = b.pubmed_id CREATE (a)<-[:SAMEAS]-(b) RETURN a,b
+MATCH(:PubMed)-[r:SAMEAS]-(:Drugs) DELETE r #
+ 
+### Drugs to HMDBMetabolites ###
+
+MATCH(a:Drugs) MATCH(b:HMDBMetabolites) WHERE a.identifier = b.kegg_id CREATE (a)-[:SAMEAS]->(b) RETURN a, b 
+
+MATCH(a:HMDBMetabolites) MATCH(b:Drugs) WHERE a.drugbank_id=b.drugbank_id CREATE (a)-[:SAMEAS]->(b) RETURN a, b
+
+MATCH(a:Drugs) MATCH(b:HMDBMetabolites) WHERE a.identifier=b.cid CREATE (a) -[:SAMEAS]->(b)RETURN a, b
+
+### Saliva to Other Nodes
+MATCH (a:SalivaPathways_Diseases) MATCH(b:PubMed) WHERE a.pubmed_id = b.pmid CREATE (a)-[r:SAMEAS]->(b) RETURN a,b
+
+MATCH (a:Saliva_Proteins) MATCH (b:Gene) where a.gene = b.symbol CREATE (a)-[R:SAMEAS]->(b) return a,b
+
+MATCH(a:CHEBI) MATCH(b:Salivametabolites) where a.chebi_id = b.chebi_id CREATE (a)-[r:SAMEAS]->(b) RETURN a,b
+
+MATCH(a:PhenolCompounds) MATCH(b:Salivametabolites) where a.phenol_id = b.phenol_id CREATE (a)-[r:SAMEAS]->(b) RETURN a,b
+
+###
