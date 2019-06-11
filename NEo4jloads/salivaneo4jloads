@@ -1,37 +1,40 @@
-cp -r /Users/aginni/Documents/salivadata/salivacsvdata /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec/import
-
 
 LOAD CSV WITH HEADERS
 FROM 'file:///salivacsvdata/saliva_metabolites_copy.csv' AS Line
 CREATE(:Salivametabolites {Accession: Line.Accession, Name: Line.name, secondary_accessions: Line.secondary_accessions, description: Line.cs_description, chemical_formula: Line.chemical_formula, average_mol_wt: Line.average_mol_wt, iupac_name: Line.iupac_name, cas_number: Line.cas_number, drugbank_id: Line.drugbank_id, chebi_id: Line.chebi_id, cid: Line.cid, phenol_id: Line.phenol_id, foodb_id: Line.foodb_id, knapsack_id: Line.knapsack_id, chemspider_id: Line.chemspider_id, kegg_id: Line.kegg_id, meta_cyc_id: Line.meta_cyc_id, bigg_id: Line.bigg_id, metlin_id: Line.metlin_id, pdb_id: Line.pdb_id, wikipedia_id: Line.wikipedia_id})
-awk 'BEGIN{FS=OFS=","} {$13 = "CHEBI:"$13; print}' saliva_metabolites.csv > Saliva_Metabolites1.csv
 
 LOAD CSV WITH HEADERS
 FROM 'file:///salivacsvdata/saliva_pathways_diseases.csv' AS Line
 CREATE (:SalivaPathways_Diseases{Accession: Line.accession, pathwayname: Line.pathway_name, smpdb_id: Line.smpdb_id, Kegg_map_id: Line.Kegg_map_id, diseasename: Line.disease_name, omim_id: Line.omim_id, pubmed_id: Line.pubmed_id})
-
-cp /Users/aginni/Documents/salivadata/salivacsvdata/saliva_proteins.csv /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec/import/salivacsvdata/
-cp /Users/aginni/Documents/salivadata/salivacsvdata/saliva_ontology.csv /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec/import/salivacsvdata/
 
 LOAD CSV WITH HEADERS
 FROM 'file:///salivacsvdata/saliva_ontology.csv' AS Line
 CREATE
 (:saliva_Ontology {accession: Line.accession, term:Line.ontology_root_term,definition:Line.definition,Parent_id: Line.parent_id,level:Line.level,type: Line.type,descendant_term:Line.descendant_term,descend_definition:Line.descend_definition, descend_parent_id:Line.descend_parent_id,descend_level: Line.descend_level,descend_type:Line.descend_type,descend_synonyms: Line.descend_synonyms,subdescendant_term:Line.subdescendant_term,	subdescend_def: Line.descendsub_definition,subdescend_parent_id: Line.subdescend_parent_id,	subdescend_level:Line.descend2_level, subdescend_type:Line.subdescend_type,subdescend_synonyms: Line.descend_synonyms})
 
-csvcut -c 1-6 saliva_proteins_ontology.csv > saliva_proteins.csv
-csvcut -c 1,7-23 saliva_proteins_ontology.csv > saliva_ontology.csv
-
-
 LOAD CSV WITH HEADERS
 FROM 'file:///salivacsvdata/saliva_proteins.csv' AS Line
 CREATE (:Saliva_Proteins {Protein_accession: Line.protein_accession, protein_name: Line.protein_name, uniprot_id: Line.uniprot_id, gene: Line.gene_name, type: Line.protein_type})
 
-awk '{if(NR==1){print; next}; $13="CHEBI:"$13; print}' Saliva_Metabolites1.csv > Saliva_Metabolites2.csv
+
 
 MATCH (a:SalivaPathways_Diseases) MATCH(b:PubMed) WHERE a.pubmed_id = b.pmid CREATE (a)-[r:SAMEAS]->(b) RETURN a,b
 
 MATCH (a:Saliva_Proteins) MATCH (b:Gene) where a.gene = b.symbol CREATE (a)-[R:SAMEAS]->(b) return a,b
 
-
 MATCH(a:CHEBI) MATCH(b:Salivametabolites) where a.chebi_id = b.chebi_id CREATE (a)-[r:SAMEAS]->(b) RETURN a,b
 MATCH(a:PhenolCompounds) MATCH(b:Salivametabolites) where a.phenol_id = b.phenol_id CREATE (a)-[r:SAMEAS]->(b) RETURN a,b
+
+cp /Users/aginni/Documents/salivadata/salivacsvdata/saliva_proteins.csv /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec/import/salivacsvdata/
+cp /Users/aginni/Documents/salivadata/salivacsvdata/saliva_ontology.csv /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec/import/salivacsvdata/
+awk 'BEGIN{FS=OFS=","} {$13 = "CHEBI:"$13; print}' saliva_metabolites.csv > Saliva_Metabolites1.csv
+cp -r /Users/aginni/Documents/salivadata/salivacsvdata /Users/aginni/opt/brew/Cellar/neo4j/3.5.3/libexec/import
+
+
+csvcut -c 1-6 saliva_proteins_ontology.csv > saliva_proteins.csv
+csvcut -c 1,7-23 saliva_proteins_ontology.csv > saliva_ontology.csv
+
+
+
+awk '{if(NR==1){print; next}; $13="CHEBI:"$13; print}' Saliva_Metabolites1.csv > Saliva_Metabolites2.csv
+
