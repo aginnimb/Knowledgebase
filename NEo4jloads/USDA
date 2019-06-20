@@ -1,0 +1,9 @@
+USING PERIODIC COMMIT 500
+LOAD CSV WITH HEADERS FROM 'file:///USDA/Nutrients.csv' AS Line CREATE(:USDA_Nutrients{ndb_no:Line.NDB_No,nutrient_code:Line.Nutrient_code,nutrient_name:Line.Nutrient_name,output_value:Line.Output_value,output_uom:Line.Output_uom})
+
+USING PERIODIC COMMIT 500
+LOAD CSV WITH HEADERS FROM 'file:///USDA/Products1.csv' AS Line  CREATE(:USDA_Products{ndb_no:Line.NDB_Number, long_name:Line.long_name,manufacturer:Line.manufacturer, ingredients:Line.ingredients_english})
+
+USING PERIODIC COMMIT 500
+LOAD CSV WITH HEADERS FROM 'file:///USDA/Serve.csv' AS Line 
+CREATE (:USDA_ServingSize {ndb_no:Line.NDB_No, serving_size:Line.Serving_Size, serving_size_uom:Line.Serving_Size_UOM, household_servingsize:Line.Household_Serving_Size, household_servingsize_uom:Line.Household_Serving_Size_UOM})
