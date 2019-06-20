@@ -1,3 +1,4 @@
+For BFPD Data----
 USING PERIODIC COMMIT 500
 LOAD CSV WITH HEADERS FROM 'file:///USDA/Nutrients.csv' AS Line CREATE(:USDA_Nutrients{ndb_no:Line.NDB_No,nutrient_code:Line.Nutrient_code,nutrient_name:Line.Nutrient_name,output_value:Line.Output_value,output_uom:Line.Output_uom})
 
@@ -7,3 +8,13 @@ LOAD CSV WITH HEADERS FROM 'file:///USDA/Products1.csv' AS Line  CREATE(:USDA_Pr
 USING PERIODIC COMMIT 500
 LOAD CSV WITH HEADERS FROM 'file:///USDA/Serve.csv' AS Line 
 CREATE (:USDA_ServingSize {ndb_no:Line.NDB_No, serving_size:Line.Serving_Size, serving_size_uom:Line.Serving_Size_UOM, household_servingsize:Line.Household_Serving_Size, household_servingsize_uom:Line.Household_Serving_Size_UOM})
+
+
+For SR legacy Data----
+LOAD CSV WITH HEADERS FROM 'file:///USDA_SR_csv/food_desc1.csv' AS Line CREATE(:USDA_SR_FOOD_DESC{NDB_no:Line.NDB_no ,fdgrp_code: Line. fdgrp_code, long_desc:Line.long_desc,short_desc:Line.short_desc,common_name:Line.common_name,Manufacturer:Line.Manufacturer,Survey:Line.Survey,Ref_desc:Line.Ref_desc, Refuse:Line.Refuse,Sci_name:Line.Sci_name,Nitrogen_factor:Line.Nitrogen_factor,Protein_factor:Line.Protein_factor,Fat_factor:Liine.Fat_factor,CHO_factor:ine.CHO_factor})
+
+LOAD CSV WITH HEADERS FROM 'file:///USDA_SR_csv/foodgroup.csv' AS Line CREATE(:USDA_SR_FoodGroup{fdgrp_code:Line.fdgrp_code,fdgrp_desc:Line.fdgrp_desc})
+
+LOAD CSV WITH HEADERS FROM 'file:///USDA_SR_csv/Nutri_Def.csv' AS Line CREATE(:USDA_SR_Nutri_Def{Nutrient_no:Line.Nutrient_no,Units:Line.Units,tag_name:Line.tag_name,Nutrient_Desc:Line.Nutrient_Desc,No_of_Decimals:Line.No_of_Decimals,SR_Order:Line.SR_Order})
+
+LOAD CSV WITH HEADERS FROM 'file:///USDA_SR_csv/Nutrient_data.csv' AS Line CREATE(:USDA_SR_Nutrients{Nutrient_no:Line.Nutrient_no, Nutrient_value:Line.Nutrient_value,Number_data_pts:Line.Number_data_pts,Std_err:Line.Std_err,Src_code:Line.Src_code,Deriv_code:Line.Deriv_code,Ref_NDB_no:Line.Ref_NDB_no,Added_Nutr_mark:Line.Added_Nutr_mark,No_studies:Line.No_studies,Min:Line.Min,Max:Line.Max,DF:Line.DF,Low_EB:Line.Low_EB,Up_EB:Line.Up_EB,Stat_comments:Line.Stat_comments,Modifies_date:Line.Modifies_date})
