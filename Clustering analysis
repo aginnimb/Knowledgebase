@@ -1,0 +1,39 @@
+import pandas as pd
+from sklearn.cluster import AgglomerativeClustering as AC
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.cluster.hierarchy as hc
+from scipy.spatial.distance import pdist,squareform
+from scipy.cluster.hierarchy import ward,fcluster,is_valid_linkage
+
+# read data
+data = pd.read_csv("/home/jovyan/PEP_Lev1/Score.csv", sep = ',',usecols = range(0,4))
+data["Jaccard_Distance"] = 1- data["Jaccard_score"]
+data["Weighted_Jacc_Dist"] =  1-data["Weighed_score"]
+
+#redefining column names
+data.columns = ["Gene_symbols", "Jaccard_Similarity","Weighted_Similarity","Chebi_Compounds","Jaccard_Distance","Weighted_Jacc_Dist"]
+
+#SUBSET DATA
+data_sub = data[["Gene_symbols","Chebi_Compounds","Jaccard_Distance"]].copy()  
+symbols = data[["Gene_symbols"]].values.tolist()
+data_matrix = data_sub.pivot_table(index=['Gene_symbols'],values = ['Jaccard_Distance'],columns=['Chebi_Compounds'],aggfunc=np.mean,fill_value=0)
+
+#Hierarchical clustering 
+T= hc.linkage(test, method = 'ward')
+fig = plt.figure(figsize=(20, 10))
+plt.title('Hierarchical Clustering Dendrogram')
+plt.xlabel('Gene_symbol')
+plt.ylabel('distance')
+hc.dendrogram(
+    T,
+    leaf_rotation=90.,  # rotates the x axis labels
+    leaf_font_size=9,  # font size for the x axis labels
+    p=5,
+    truncate_mode='level',
+    labels = test.index,
+    orientation='top'
+)
+plt.show()
+hc.leaves_list(T)[0:119]
+lev1genes = [symbls[x] for x in hc.leaves_list(T)[0:119]] # to validate and trace back
