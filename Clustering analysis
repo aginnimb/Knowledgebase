@@ -37,3 +37,5 @@ hc.dendrogram(
 plt.show()
 hc.leaves_list(T)[0:119]
 lev1genes = [symbls[x] for x in hc.leaves_list(T)[0:119]] # to validate and trace back
+
+#Heat map with Dendogram 
