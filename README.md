@@ -2,7 +2,7 @@
 
 This repository contains python scripts to parse various file formats which includes XML, .txt etc and also Neo4j scripts to upload CSV files,creating relations between the nodes,querying using Cypher along with some update and delete scripts.
 
-##### FYI :sunglasses: :wink:
+##### FYI 
 
 * all the scripts are in Python 3.6.8 & 3.7 version
 * used atom, sublime text, jupyter notebook for scripting
