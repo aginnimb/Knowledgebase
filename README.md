@@ -121,7 +121,7 @@ MATCH (a:HMDBPathways) MATCH(b:Pathway Interaction Database) WHERE a.pathway_nam
 ```
 ### DELETE relationships between nodes
 
-* To delete the relationship between two nodes, it is important to specify the relation type else it will remove all existing relationships that matches the condition :anguished: :flushed:
+* To delete the relationship between two nodes, it is important to specify the relation type else it will remove all existing relationships that matches the condition 
 
 ###### Example:
 
