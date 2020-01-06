@@ -13,3 +13,5 @@ paste -d ',' <(csvcut -d',' -c 1,2,4,6,7,8 phenolcompounds.csv) <(csvcut -d',' -
 
 sed -e ’s/‘^’/‘,’/g’ FD_GROUP.txt > fd.txt
 sed -e 's/'~'//g' Nutrients_DEF.csv > Nutrients_def.csv
+
+sed -i -e 's/^/CHEBI:/' chebi2reactome.txt (worked)
